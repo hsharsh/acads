@@ -13,6 +13,7 @@ function [x,nIter] = newton(f,xo,J)
        
        if abs(feval(f,xn)) < epsilon
            nIter = 99-N;
+           xn = x;
            disp(['Iteration: ', num2str(nIter)]);
            return;
        end

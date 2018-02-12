@@ -45,6 +45,7 @@ disp(root);
 disp(nIter);
 %}
 
+
 % Newton Rhapson simultaneous equations
 
 xo = [0.5; 1.5];
