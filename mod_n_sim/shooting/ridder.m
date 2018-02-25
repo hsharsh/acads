@@ -48,12 +48,10 @@ function root = ridder(func, x1, x2, tol)
        if i > 1
            if abs(x4-xo) < tol*max(abs(x4),1)
                root = x4;
-               disp('asdf');
                return;
            end
        end
        xo = x4;   
-       disp(i);
        if f1*f4 < 0
            x2 = x4; f2 = f4;
        else

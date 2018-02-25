@@ -1,4 +1,4 @@
-function [xsol, ysol] = taylor(x,y,dy,xstop,h)
+function [xsol, ysol] = taylor(x,y,fexp,xstop,h)
     
     if size(y,1) > 1
         y = y';
@@ -9,10 +9,9 @@ function [xsol, ysol] = taylor(x,y,dy,xstop,h)
     xsol(1,1) = x;
     ysol(1,:) = y;
     k = 1;
-    
     while x < xstop
         h = min(h,(xstop-x));
-        d = feval(dy,x,y);
+        d = feval(fexp,x,y);
         hh = 1;
         for j = 1:4                     % For nth order solution do j = 1:n and define derivate dy and y upto nth derivative
            hh = hh*h/j;
