@@ -1,9 +1,11 @@
-clc
-clear
-close all
+clc;
+clear all;
 %-----------------------------------------------
 
 h = 0.125e-3*4;
+% h = 0.127e-3*8;
+% h = 0.127
+
 
 % E11 = 181e9;
 % E22 = 10.273e9;
@@ -38,28 +40,16 @@ U4 = (Q11+Q22+6*Q12-4*Q66)/8;
 U5 = (U1-U4)/2;
 
 %sysmetric laminate fiber angles
-% theta = [45 -45 -45 45 -45 45 45 -45];
+% theta = [0 90 45 -45 -45 45 90 0];
 % theta = [30 -30 -30 30];
 % theta = [45 45 45 45];
-% theta = [30 30 30 30];
-% theta = [45 30 -30 -45];
-% theta = [10 10 10 10];
-% theta = [0 0 0 0];
-theta = [0 90 90 0];
-% theta = [0 45 -45 90];
-% theta = [0 90 45 -45];
-% theta = [45 30 30 45];
-%  theta = [0 45 -45 90 90 -45 45 0];
-% theta = [0 90 -45 -45 90 0];
-% theta = [60 60 60 60 -60 -60 -60 -60];
-% theta = [60 60 -60 -60 -60 -60 60 60];
-% theta = [60 -60 60 -60 -60 60 -60 60];
-% theta = [90 0 0 90];
+% theta = [45 -45 -45 45];
 % theta = [0 90 -45 45 45 -45 90 0];
-% theta = [0 90 45 30 60 -60 -30 -45 -90 0];
-% theta = [0 90 30 -30 -60 60 60 -60 -30 30 90 0];
-% theta = [30 -30 30 -30];
-theta = (theta*pi)./180;
+% theta0 = [0];
+theta0 = [0 90 90 0];
+
+for orient=1:19
+theta = (theta0*pi)./180;
 
 c2 = cos(2.*theta);
 c4 = cos(4.*theta);
@@ -69,8 +59,6 @@ s4 = sin(4.*theta);
 N = length(theta); %number of lamina
 
 Q_xy = zeros(N, 3, 3); %stiffness matrix for each lamina
-
-t = h/N;
 
 for j=1:N
     Q_xy(j,1,1) = U1 + U2*c2(j) + U3*c4(j); %Q11_xy
@@ -88,6 +76,7 @@ for j=1:N
     
     Q_xy(j,3,3) = U5 - U3*c4(j);            %Q66_xy
 end
+t = h/N;
 
 A = zeros(3,3); %laminate bending matrix
 for j=1:N
@@ -111,10 +100,48 @@ for j=1:N
     z1 = z2 - t;
     D = D + squeeze(Q_xy(j,:,:)) .* ( z2^3 - z1^3 );
 end
-
-
 D = (1/3)*D;
 
-display(A);
-display(B);
-display(D);
+a=inv(A);
+Ex(orient)=1/a(1,1)/h;
+Ey(orient)=1/a(2,2)/h;
+Gxy(orient)=1/a(3,3)/h;
+nuxy(orient)=-a(2,1)/a(1,1);
+nuyx(orient)=-a(1,2)/a(2,2);
+netasx(orient)=a(1,3)/a(3,3);
+netaxs(orient)=a(3,1)/a(1,1);
+netasy(orient)=a(2,3)/a(3,3);
+netays(orient)=a(3,2)/a(2,2);
+theta0=theta0 +5*[1 1 1 1];
+end
+
+figure
+subplot(3,2,1)
+plot(0:5:90,Ex)
+title('Ex');
+grid on;
+
+subplot(3,2,2)
+plot(0:5:90,Ey)
+title('Ey');
+grid on;
+
+subplot(3,2,3)
+plot(0:5:90,Gxy)
+title('Gxy');
+grid on;
+
+subplot(3,2,4)
+plot(0:5:90,nuxy)
+title('nuxy');
+grid on;
+
+subplot(3,2,5)
+plot(0:5:90,netasx);
+title('netasx');
+grid on;
+
+subplot(3,2,6)
+plot(0:5:90,netasy);
+title('netasy');
+grid on;
