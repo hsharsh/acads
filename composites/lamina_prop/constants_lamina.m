@@ -46,7 +46,7 @@ theta = theta*(180/pi);
 
 figure;
 
-subplot(3,3,1)
+subplot(3,2,1)
 plot(theta,Ex);
 title('Ex');
 xlabel('theta');
@@ -54,7 +54,7 @@ ylabel('Ex');
 xlim([-180 180]);
 grid on;
 
-subplot(3,3,2)
+subplot(3,2,2)
 plot(theta,Ey);
 title('Ey');
 xlabel('theta');
@@ -62,7 +62,7 @@ ylabel('Ey');
 xlim([-180 180]);
 grid on;
 
-subplot(3,3,3)
+subplot(3,2,3)
 plot(theta,Gxy);
 title('Gxy');
 xlabel('theta');
@@ -70,15 +70,16 @@ ylabel('Gxy');
 xlim([-180 180]);
 grid on;
 
-subplot(3,3,4)
+%{subplot(3,2,4)
 plot(theta,vyx);
 title('vyx');
 xlabel('theta');
 ylabel('vyx');
 xlim([-180 180]);
 grid on;
+%}
 
-subplot(3,3,5)
+subplot(3,2,4)
 plot(theta,vxy);
 title('vxy');
 xlabel('theta');
@@ -86,7 +87,8 @@ ylabel('vxy');
 xlim([-180 180]);
 grid on;
 
-subplot(3,3,6)
+%{
+subplot(3,2,6)
 plot(theta,nxyx);
 title('nxy,x');
 xlabel('theta');
@@ -94,22 +96,23 @@ ylabel('nxy,x');
 xlim([-180 180]);
 grid on;
 
-subplot(3,3,7)
+subplot(3,2,7)
 plot(theta,nxyy);
 title('nxy,y');
 xlabel('theta');
 ylabel('nxy,y');
 xlim([-180 180]);
 grid on;
-
-subplot(3,3,8)
+%}
+subplot(3,2,5)
 plot(theta,nxxy);
 title('nx,xy');
 xlabel('theta');
 ylabel('nx,xy');
 xlim([-180 180]);
 grid on;
-subplot(3,3,9)
+
+subplot(3,2,6)
 plot(theta,nyxy);
 title('ny,xy');
 xlabel('theta');

@@ -27,9 +27,9 @@ theta = linspace(-pi,pi);
 Ex = zeros(length(theta),1);
 Ey = zeros(length(theta),1);
 Gxy = zeros(length(theta),1);
-gmxy = zeros(length(theta),1);
-nxyx = zeros(length(theta),1);
-nxyy = zeros(length(theta),1);
+vxy = zeros(length(theta),1);
+nxxy = zeros(length(theta),1);
+nyxy = zeros(length(theta),1);
 
 Q11 = zeros(length(theta),1);
 Q22 = zeros(length(theta),1);
@@ -49,9 +49,9 @@ for i = 1:length(theta)
     Ex(i)   = 1/S(1,1);
     Ey(i)   = 1/S(2,2);
     Gxy(i)  = 1/S(3,3);
-    gmxy(i) = -Ey(i)*S(1,2);
-    nxyx(i) = Gxy(i)*S(1,3);
-    nxyy(i) = Gxy(i)*S(2,3);
+    vxy(i) = -Ey(i)*S(1,2);
+    nxxy(i) = Ex(i)*S(3,1);
+	nyxy(i) = Ey(i)*S(3,2);
 
     Q11(i) = Q(1,1);
     Q22(i) = Q(2,2);
@@ -105,9 +105,9 @@ grid on;
 subplot(3,2,4)
 hold on;
 plot(theta,Q12);
-plot(theta,gmxy);
+plot(theta,vxy);
 title('Q12');
-legend('Q12','gmxy');
+legend('Q12','vxy');
 xlabel('theta');
 
 xlim([-180 180]);
@@ -117,9 +117,9 @@ grid on;
 subplot(3,2,5)
 hold on;
 plot(theta,Q16);
-plot(theta,nxyx);
+plot(theta,nxxy);
 title('Q16');
-legend('Q16','nxyx');
+legend('Q16','nxxy');
 xlabel('theta');
 
 xlim([-180 180]);
@@ -129,9 +129,9 @@ grid on;
 subplot(3,2,6)
 hold on;
 plot(theta,Q26);
-plot(theta,nxyy);
+plot(theta,nyxy);
 title('Q26');
-legend('Q26','nxyy');
+legend('Q26','nyxy');
 xlabel('theta');
 
 xlim([-180 180]);
