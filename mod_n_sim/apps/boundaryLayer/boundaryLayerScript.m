@@ -1,5 +1,3 @@
-% Copyright 2013 The MathWorks, Inc.
-
 %% Parameters
 rho = 1; % kg/m^3
 U = 1;   % m/s

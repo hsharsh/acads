@@ -1,4 +1,7 @@
-clear all
+clc
+clear
+close all
+
 % h=8*0.005*0.02544;
 % x=X-0.5;
 % y=x;
@@ -29,13 +32,28 @@ U2 = (Q11-Q22)/2;
 U3 = (Q11+Q22-2*Q12-4*Q66)/8;
 U4 = (Q11+Q22+6*Q12-4*Q66)/8;
 U5 = (U1-U4)/2;
+
 global GAMMA_1 GAMMA_2 GAMMA_3 GAMMA_4
+
 GAMMA_0 = [U1 U4 0; U4 U1 0; 0 0 U5];
 GAMMA_1 = [U2 0 0; 0 -U2 0; 0 0 0];
 GAMMA_3 = [0 0 U2/2; 0 0 U2/2; U2/2 U2/2 0];
 GAMMA_2 = [U3 -U3 0; -U3 U3 0; 0 0 -U3];
 GAMMA_4 = [0 0 U3; 0 0 -U3; U3 -U3 0];
-layup=[0 0 0 0 0 0 0 0];
+
+% layup = [0 0 0 0 0 0 0 0];
+% layup = [60 -60 60 -60 -60 60 -60 60];
+% layup = [0 90 45 -45 -45 45 90 0];
+% layup = [90 90 90 90 90 90 90 90];
+
+% layup = [45 -45 -45 45 45 -45 -45 45];
+
+
+
+% layup = [0 0 90 90 90 90 0 0];
+% layup = [0 90 90 90 90 90 90 0];
+% layup = [0 0 90 90 90 90 0 0];
+% layup = [0 0 0 90 90 0 0 0];
 n_layer=length(layup);
 t_tow=0.127e-3;
 h=t_tow*n_layer;
@@ -78,6 +96,12 @@ for k=1:n_layer
     xi_D3 = xi_D3 + (((z2^3 - z1^3)/3)*s2)*12;
     xi_D4 = xi_D4 + (((z2^3 - z1^3)/3)*s4)*12;
 end
-A = h*(GAMMA_0 + xi_A1*GAMMA_1 + xi_A2*GAMMA_2 + xi_A3*GAMMA_3 + xi_A4*GAMMA_4)
-B = (h^2/4)*(xi_B1*GAMMA_1 + xi_B2*GAMMA_2 + xi_B3*GAMMA_3 +xi_B4*GAMMA_4)
-D = (h^3/12)*(GAMMA_0 + xi_D1*GAMMA_1 + xi_D2*GAMMA_2 + xi_D3*GAMMA_3 +xi_D4*GAMMA_4)
+A = h*(GAMMA_0 + xi_A1*GAMMA_1 + xi_A2*GAMMA_2 + xi_A3*GAMMA_3 + xi_A4*GAMMA_4);
+B = (h^2/4)*(xi_B1*GAMMA_1 + xi_B2*GAMMA_2 + xi_B3*GAMMA_3 +xi_B4*GAMMA_4);
+D = (h^3/12)*(GAMMA_0 + xi_D1*GAMMA_1 + xi_D2*GAMMA_2 + xi_D3*GAMMA_3 +xi_D4*GAMMA_4);
+
+display(layup);
+disp('Xeta(s):');
+display([ xi_A1 xi_A2 xi_A3 xi_A4]);
+display([ xi_B1 xi_B2 xi_B3 xi_B4]);
+display([ xi_D1 xi_D2 xi_D3 xi_D4]);

@@ -39,7 +39,8 @@ U4 = (Q11+Q22+6*Q12-4*Q66)/8;
 U5 = (U1-U4)/2;
 
 %sysmetric laminate fiber angles
-theta = [0 90 45 -45 -45 45 90 0];
+% theta = [0 90 45 -45 -45 45 90 0];
+theta = [0 90 90 0];
 % theta= [ 0 0 0 0 0 0 0 0];
 % theta = [30 -30 -30 30];
 % theta = [45 45 45 45];
@@ -98,11 +99,15 @@ for j=1:N
 end
 D = (1/3)*D;
 
-A
-B
-D
-M=[1.0;0.0;.0]
-strain=inv(A)*M
+M = [1.0;0.0;.0];
+strain=inv(A)*M;
+
+display(A);
+display(B);
+display(D);
+display(M);
+display(strain);
+
 k=1;
 for i=1:N
     c=cos(theta(i));s=sin(theta(i));
@@ -128,21 +133,21 @@ for i=1:N
     k=k+2;
 end
 %%%%%%% Strain plots in Material Coordinate system
-figure
+subplot(3,4,1)
 plot(epsl(1,:),zc)
 hold on
 plot(epsl(1,:),zc,'ro')
 xlabel(' strain in x direction (MCS)')
 ylabel('thickness')
 
-figure
+subplot(3,4,2)
 plot(epsl(2,:),zc)
 hold on
 plot(epsl(2,:),zc,'ro')
 xlabel('strain in y direction (MCS)')
 ylabel('thickness')
 
-figure
+subplot(3,4,3)
 plot(epsl(3,:),zc)
 hold on
 plot(epsl(3,:),zc,'ro')
@@ -150,21 +155,21 @@ xlabel('strain in xy direction (MCS)')
 ylabel('thickness')
 
 %%%%%%%%%stress plots in MCS
-figure
+subplot(3,4,4)
 plot(strl(1,:),zc)
 hold on
 plot(strl(1,:),zc,'ro')
 xlabel('stress in x direction (MCS)')
 ylabel('thickness')
 
-figure
+subplot(3,4,5)
 plot(strl(2,:),zc)
 hold on
 plot(strl(2,:),zc,'ro')
 xlabel('stress in y direction (MCS)')
 ylabel('thickness')
 
-figure
+subplot(3,4,6)
 plot(strl(3,:),zc)
 hold on
 plot(strl(3,:),zc,'ro')
@@ -173,21 +178,21 @@ ylabel('thickness')
 
 
 %%%%%%% Strain plots in Global Coordinate system
-figure
+subplot(3,4,7)
 plot(epsg(1,:),zc)
 hold on
 plot(epsg(1,:),zc,'ro')
 xlabel(' strain in x direction (GCS)')
 ylabel('thickness')
 
-figure
+subplot(3,4,8)
 plot(epsg(2,:),zc)
 hold on
 plot(epsg(2,:),zc,'ro')
 xlabel('strain in y direction (GCS)')
 ylabel('thickness')
 
-figure
+subplot(3,4,9)
 plot(epsg(3,:),zc)
 hold on
 plot(epsg(3,:),zc,'ro')
@@ -195,21 +200,21 @@ xlabel('strain in xy direction (GCS)')
 ylabel('thickness')
 
 %%%%%%%%%stress plots in GCS
-figure
+subplot(3,4,10)
 plot(strg(1,:),zc)
 hold on
 plot(strg(1,:),zc,'ro')
 xlabel('stress in x direction (GCS)')
 ylabel('thickness')
 
-figure
+subplot(3,4,11)
 plot(strg(2,:),zc)
 hold on
 plot(strg(2,:),zc,'ro')
 xlabel('stress in y direction (GCS)')
 ylabel('thickness')
 
-figure
+subplot(3,4,12)
 plot(strg(3,:),zc)
 hold on
 plot(strg(3,:),zc,'ro')

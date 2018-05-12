@@ -1,14 +1,25 @@
-function main
+function main2
     clc
-    x = [0 0 0]';
-    b = [9 -7 12]';
+    n = 10;
+    x = zeros(n,1);
+    b = 5*ones(n,1);
+    b(1) = 9;
     [x, numIter] = conjGrad(@fx, x, b);
     display(x);
     display(numIter);
 end
 
 function Ax = fx(x)
-    A = [3 -3 3; -3 5 1; 3 1 5];
+    n = 10;
+    A = zeros(n);
+    A(1,1) = 4; A(1,2) = -1;
+    for i = 2:n-1
+        A(i,i-1) = -1;
+        A(i,i) = 4;
+        A(i,i+1) = -1;
+    end
+    A(n,n-1) = -1; A(n,n) = 4;
+    
     Ax = A*x;
 end
 

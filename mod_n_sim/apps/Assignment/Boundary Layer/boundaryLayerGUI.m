@@ -1,11 +1,11 @@
 function varargout = boundaryLayerGUI(varargin)
     gui_Singleton = 1;
-    gui_State = struct('gui_Name',       mfilename, ...
-        'gui_Singleton',  gui_Singleton, ...
-        'gui_OpeningFcn', @boundaryLayerGUI_OpeningFcn, ...
-        'gui_OutputFcn',  @boundaryLayerGUI_OutputFcn, ...
-        'gui_LayoutFcn',  [] , ...
-        'gui_Callback',   []);
+    gui_State = struct('gui_Name', mfilename, ...
+        'gui_Singleton', gui_Singleton, ...
+        'gui_OpeningFcn',@boundaryLayerGUI_OpeningFcn, ...
+        'gui_OutputFcn', @boundaryLayerGUI_OutputFcn, ...
+        'gui_LayoutFcn', [] , ...
+        'gui_Callback', []);
     if nargin && ischar(varargin{1})
         gui_State.gui_Callback = str2func(varargin{1});
     end
@@ -40,11 +40,7 @@ function boundaryLayerGUI_OpeningFcn(hObject, eventdata, handles, varargin)
     set(handles.strline,'XLim',[0 L],'YLim',[0 H])
     title(handles.strline,'Streamlines')
     xlabel(handles.strline,'x (m)'),ylabel(handles.strline,'y (m)')
-   %{
-    annotation(gcf,'textbox',get(handles.Re,'Position'),....
-        'String',{'      Re_x = \rhoUx/\mu       \delta_x ~= 5x/{\surd}Re_x'},...
-        'LineStyle','none')
-%}
+
     % Choose default command line output for boundaryLayerGUI
     handles.output = hObject;
 
@@ -106,6 +102,7 @@ function boundarylayer(handles)
                 D(j) = u(j,i)^2/dx - (- nu/dy^2 + v(j,i)/2/dy)*u(j+1,i+1);
             end
         end
+        
         % solve for u with TDMA method
         usol = tdma(A(2:end),B(2:end),C(2:end),D(2:end));
         u(2:ny-1,i+1) = usol;
@@ -116,14 +113,7 @@ function boundarylayer(handles)
     end
     % Plotting
     % Reynodes number and boundary layer thickness at x = L
-%{
-    annotation(gcf,'textbox',get(handles.Re,'Position'),...
-        'LineStyle','none','BackgroundColor',[0.941 0.941 0.941]);
-    annotation(gcf,'textbox',get(handles.Re,'Position'),....
-        'String',{'      Re_x = \rhoUx/\mu       \delta_x ~= 5x/{\surd}Re_x',...
-                 ['      Re_L = ',num2str(Re_L),'       \delta_L ~=',num2str(delta_L)]},...
-        'LineStyle','none');
-  %}
+
   % u/U velocity contour
     set(handles.contour,'XLim',[0 L],'YLim',[0 H],'NextPlot','replacechildren');
     contourf(handles.contour,X,Y,u/U,[0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 0.99]);
@@ -152,32 +142,14 @@ function X = tdma(A,B,C,D)
     Cp(1) = C(1)/B(1);
     Dp(1) = D(1)/B(1); 
     for i = 2:n
-    Cp(i) = C(i)/(B(i)-Cp(i-1)*A(i));
-    Dp(i) = (D(i)-Dp(i-1)*A(i))/(B(i)-Cp(i-1)*A(i));
+        Cp(i) = C(i)/(B(i)-Cp(i-1)*A(i));
+        Dp(i) = (D(i)-Dp(i-1)*A(i))/(B(i)-Cp(i-1)*A(i));
     end
     % Backward substitution, since X(n) is known first.
     X(n) = Dp(n);
     for i = n-1:-1:1
-    X(i) = Dp(i)-Cp(i)*X(i+1);
+        X(i) = Dp(i)-Cp(i)*X(i+1);
     end
-
-function AppHelp(varargin)
-    % Create help message
-    dlgname = 'About Boundary Layer App';
-    txt = {'Laminar boundary layer problem solved numerically with TDMA method';
-        '';
-        'Start - Start the simulation';
-        'Open Code - Open a pre-written script to show the solution code';
-        '';
-        '* Play with flow property and geometry information to study the change';
-        '  in velocity profile.';
-        '* Use zoom, pan and data curser in the toolbar to interact with the';
-        '  plots as usual';
-        '* Equation of boundary layer thickness printed on the App is based on';
-        '  analytical solution.';
-        '* If Reynolds number is too high (>500,000 for flow over flat plate),';
-        '  the computation is not valid, since flow becomes turbulent.'};
-    helpdlg(txt,dlgname);
 
 % --- Executes on button press in start.
 function start_Callback(hObject, eventdata, handles)

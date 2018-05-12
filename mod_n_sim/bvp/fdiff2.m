@@ -19,3 +19,19 @@ function [A,B] = fdiff2(x,h,n)
     A(n,n-2) = 2;   A(n,n-1) = -8;       A(n,n) = 6;
     B(n) = h^3;
 end
+
+
+%{
+%fdiff2.m
+
+l = 1;
+p = 1;
+EI = 1;
+n = 1001;
+xstart = 0; xstop = l/2;
+h = (xstop-xstart)/(n-1);
+x = linspace(xstart,xstop,n);
+[A,B] = fdiff2(x,h,n);
+v = A \ B;
+plot(x,v);
+%}
