@@ -4,11 +4,16 @@ close all
 
 x = load('quad_mesh_nodes');
 conn = load('quad_mesh_elem');
+
+
+plot(x(:,1),x(:,2),'bx') 
+hold on;
+
 nnod = length(x);
 nelm = length(conn);
 xgp = sqrt(3/5)*[-1 0 1];
 wgp = [5 8 5]/9;
-ngp = length(xgp);
+ngp = length(xgp);3
 
 kg = zeros(nnod*2);
 fg = zeros(nnod*2,1);
