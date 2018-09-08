@@ -2,12 +2,16 @@ clc
 clear
 close all
 
-p = 20;
-r = 10;
-s = 15;
-m = 8;
-n = 10;
-l = 15;
+% These parameters define the shape of the gastropod shell and can be
+% tweaked to get different types of shell.
+
+p = 20;                 % Pitch
+r = 10;                 % Radius 1
+s = 15;                 % Radius 2
+l = 15;                 % Pictch reduction factor
+m = 8;                  % Radius 2 reduction factor
+n = 10;                 % Radius 1 reduction factor
+                 
 
 u = 0:0.02:m;
 v = 0:0.02:n;
@@ -26,4 +30,4 @@ for i = 1:length(u)
 end
 
 surf(X,Y,Z);
-axis equal
+axis equal;
